@@ -25,14 +25,11 @@ public class ReqTest {
 
     @Test
     public void whenGetMethod() {
-        var content = """
-                GET /queue/weather HTTP/1.1
-                       Host: localhost:9000
-                       User-Agent: curl/7.67.0
-                       Accept: */*
-                       
-                userId=1
-                """;
+        var content = "GET /queue/weather HTTP/1.1" + System.lineSeparator()
+               + "Host: localhost:9000" + System.lineSeparator()
+               + "User-Agent: curl/7.67.0" + System.lineSeparator()
+               + "Accept: */*" + System.lineSeparator() + System.lineSeparator()
+               + "userId=1";
         var req = Req.of(content);
         assertThat(req.method(), is("GET"));
         assertThat(req.mode(), is("queue"));
