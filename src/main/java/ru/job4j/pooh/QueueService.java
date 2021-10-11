@@ -11,15 +11,13 @@ public class QueueService implements Service {
         if ("POST".equals(req.method())) {
             String byQueue = req.queue();
             String byParam = req.param(req.keyMap());
-            if (map.get(byQueue) == null) {
-                ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<>();
-                queue.add(byParam);
-                map.putIfAbsent(byQueue, queue);
-            }
-            return new Resp(byParam, 1);
+            ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<>();
+            queue.add(byParam);
+            map.putIfAbsent(byQueue, queue);
+            return new Resp(byParam, 200);
         }
         if ("GET".equals(req.method())) {
-            return new Resp(map.get(req.queue()).poll(), 0);
+            return new Resp(map.get(req.queue()).poll(), 200);
         }
         throw new IllegalArgumentException();
     }

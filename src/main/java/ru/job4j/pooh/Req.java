@@ -1,6 +1,5 @@
 package ru.job4j.pooh;
 
-import java.util.Collections;
 import java.util.Map;
 
 public class Req {
@@ -18,15 +17,17 @@ public class Req {
 
     public static Req of(String content) {
         String[] bySp = content.split(" ");
+        Map<String, String> map = null;
         if (content.contains("POST")) {
             String[] bySl = bySp[1].split("/");
             String[] byLn = bySp[bySp.length - 1].split("\n");
             String[] fPrms = byLn[byLn.length - 1].split("=");
-            return new Req(bySp[0], bySl[1], bySl[2], Collections.singletonMap(fPrms[0], fPrms[1]));
+            map = Map.of(fPrms[0], fPrms[1]);
+            return new Req(bySp[0], bySl[1], bySl[2], map);
         }
         if (content.contains("GET")) {
             String[] bySl = bySp[1].split("/");
-            return new Req(bySp[0], bySl[1], bySl[2], null);
+            return new Req(bySp[0], bySl[1], bySl[2], map);
 
         }
         throw new IllegalArgumentException();
@@ -42,6 +43,10 @@ public class Req {
 
     public String queue() {
         return this.queue;
+    }
+
+    public Map<String, String> params() {
+        return this.params;
     }
 
     public String param(String key) {

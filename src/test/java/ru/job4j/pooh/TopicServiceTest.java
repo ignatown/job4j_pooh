@@ -13,7 +13,7 @@ public class TopicServiceTest {
     public void whenPostThenGetTopic() {
         var topicService = new TopicService();
         Map<String, String> params = new HashMap<>();
-        params.put("userId", "1");
+        params.put("UserId", "1");
         params.put("temperature", "18");
         topicService.process(
                 new Req("POST", "topic", "weather", params)
